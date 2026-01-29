@@ -1,0 +1,3062 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogistiQ - Optimisation Logistique pour PME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #1a365d;
+            --navy-light: #2d4a7c;
+            --navy-dark: #0f1f3d;
+            --green: #00C48C;
+            --green-light: #00E5A0;
+            --green-dark: #00A077;
+            --gray-50: #F7FAFC;
+            --gray-100: #EDF2F7;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E0;
+            --gray-400: #A0AEC0;
+            --gray-600: #4A5568;
+            --gray-700: #2D3748;
+            --gray-900: #1A202C;
+            --white: #FFFFFF;
+            --danger: #F56565;
+            --warning: #ED8936;
+            --info: #4299E1;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background: var(--gray-50);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(26, 54, 93, 0.2);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-tagline {
+            font-size: 11px;
+            color: var(--gray-600);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-cta {
+            background: var(--green);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 196, 140, 0.3);
+        }
+
+        .header-cta:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 196, 140, 0.4);
+        }
+
+        /* Page transitions */
+        .page {
+            display: none;
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
+            color: var(--white);
+            padding: 120px 0 80px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 196, 140, 0.15);
+            border: 1px solid rgba(0, 196, 140, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--green-light);
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -1.5px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--green-light) 0%, var(--green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 50px 0 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--green-light);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .cta-primary {
+            background: var(--green);
+            color: var(--white);
+            padding: 18px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cta-primary:hover {
+            background: var(--green-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 196, 140, 0.4);
+        }
+
+        .cta-primary::after {
+            content: '→';
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-primary:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* Features */
+        .features-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 16px;
+            padding: 40px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--green) 0%, var(--green-light) 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-color: var(--green);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 20px rgba(0, 196, 140, 0.2);
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--gray-600);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* Trust Section */
+        .trust-section {
+            background: var(--gray-50);
+            padding: 80px 0;
+        }
+
+        .trust-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        .trust-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .trust-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--white);
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(26, 54, 93, 0.3);
+        }
+
+        .trust-info h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+
+        .trust-info p {
+            color: var(--gray-600);
+            font-size: 15px;
+        }
+
+        .trust-content {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--gray-700);
+        }
+
+        .trust-content strong {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .trust-badges {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: var(--gray-100);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        /* Questionnaire */
+        .questionnaire-section {
+            padding: 60px 0 100px;
+            min-height: 100vh;
+        }
+
+        .progress-wrapper {
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .progress-bar {
+            background: var(--gray-200);
+            height: 6px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--green) 0%, var(--green-light) 100%);
+            height: 100%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 196, 140, 0.5);
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--gray-200);
+        }
+
+        .question-card h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .question-card > p {
+            color: var(--gray-600);
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--navy);
+            font-size: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--gray-300);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(0, 196, 140, 0.1);
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            padding: 16px 18px;
+            border: 2px solid var(--gray-300);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .radio-option:hover,
+        .checkbox-option:hover {
+            border-color: var(--green);
+            background: rgba(0, 196, 140, 0.03);
+        }
+
+        .radio-option input:checked + span,
+        .checkbox-option input:checked + span {
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .radio-option input:checked,
+        .checkbox-option input:checked {
+            accent-color: var(--green);
+        }
+
+        .radio-option input,
+        .checkbox-option input {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(0, 196, 140, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 196, 140, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-300);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Results */
+        .results-hero {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .score-container {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .score-circle-wrapper {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 32px;
+            position: relative;
+        }
+
+        .score-circle {
+            width: 100%;
+            height: 100%;
+        }
+
+        .score-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .score-label {
+            font-size: 20px;
+            margin-bottom: 16px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .score-description {
+            font-size: 18px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        .savings-banner {
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+            color: var(--white);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin: -40px auto 60px;
+            max-width: 900px;
+            box-shadow: 0 20px 50px rgba(0, 196, 140, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .savings-banner h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        .savings-amount {
+            font-size: 72px;
+            font-weight: 800;
+            margin: 16px 0;
+            letter-spacing: -2px;
+        }
+
+        .savings-banner p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .results-content {
+            padding: 60px 0 100px;
+            background: var(--white);
+        }
+
+        .insights-grid {
+            display: grid;
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .insight-card {
+            background: var(--white);
+            border-left: 4px solid;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateX(4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card.danger {
+            border-left-color: var(--danger);
+        }
+
+        .insight-card.warning {
+            border-left-color: var(--warning);
+        }
+
+        .insight-card.success {
+            border-left-color: var(--green);
+        }
+
+        .insight-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .insight-card p {
+            color: var(--gray-700);
+            line-height: 1.7;
+        }
+
+        .recommendations-list {
+            list-style: none;
+            display: grid;
+            gap: 24px;
+        }
+
+        .recommendation-item {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .recommendation-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--green);
+        }
+
+        .recommendation-item h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .recommendation-item p {
+            color: var(--gray-700);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .recommendation-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .tag-quick-win {
+            background: rgba(0, 196, 140, 0.15);
+            color: var(--green-dark);
+        }
+
+        .tag-medium {
+            background: rgba(237, 137, 54, 0.15);
+            color: var(--warning);
+        }
+
+        .tag-long-term {
+            background: rgba(26, 54, 93, 0.15);
+            color: var(--navy);
+        }
+
+        .tag-gain {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--gray-50);
+            padding: 100px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            padding: 48px 40px;
+            border-radius: 20px;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            border-color: var(--green);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--green);
+            border-width: 3px;
+            background: linear-gradient(to bottom, var(--white) 0%, rgba(0, 196, 140, 0.02) 100%);
+        }
+
+        .pricing-card.featured::before {
+            content: 'RECOMMANDÉ';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--green);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-card h3 {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .price {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--navy);
+            margin: 24px 0;
+            letter-spacing: -2px;
+        }
+
+        .pricing-card .price-unit {
+            font-size: 18px;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 28px 0;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            color: var(--gray-700);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--green);
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            margin-top: 32px;
+        }
+
+        /* Contact Form */
+        .contact-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--gray-200);
+        }
+
+        .contact-form h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .contact-form > p {
+            text-align: center;
+            color: var(--gray-600);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .form-success {
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+            box-shadow: 0 10px 30px rgba(0, 196, 140, 0.3);
+        }
+
+        .form-success h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 12px;
+        }
+
+        .form-success p {
+            color: var(--gray-600);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        footer p {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .hero-stats {
+                gap: 40px;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-card {
+                padding: 32px 24px;
+            }
+
+            .question-card h2 {
+                font-size: 24px;
+            }
+
+            .savings-amount {
+                font-size: 48px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 40px 24px;
+            }
+
+            .logo-name {
+                font-size: 24px;
+            }
+
+            .header-cta {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 6px;
+            color: var(--gray-400);
+            cursor: help;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            background: var(--navy-dark);
+            color: var(--white);
+            text-align: left;
+            padding: 12px;
+            border-radius: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">LQ</div>
+                    <div class="logo-text">
+                        <div class="logo-name">LogistiQ</div>
+                        <div class="logo-tagline">by Romain</div>
+                    </div>
+                </div>
+                <button class="header-cta" onclick="goToPage('questionnaire')">Démarrer le diagnostic</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- PAGE 1: LANDING -->
+        <div id="page-landing" class="page active">
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <span>✨</span>
+                            Outil professionnel d'optimisation logistique
+                        </div>
+                        <h1>
+                            Réduisez vos coûts transport<br>
+                            de <span class="highlight">15 à 25%</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Diagnostic gratuit en 5 minutes • Recommandations personnalisées • Expert terrain à votre service
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">18-25%</span>
+                                <span class="stat-label">Économies moyennes réalisables</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">5 min</span>
+                                <span class="stat-label">Durée du diagnostic</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">50+</span>
+                                <span class="stat-label">Pays gérés en expertise</span>
+                            </div>
+                        </div>
+                        <button class="cta-primary" onclick="goToPage('questionnaire')">
+                            Commencer mon diagnostic gratuit
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Comment ça fonctionne ?</h2>
+                        <p class="section-subtitle">
+                            Un diagnostic complet et personnalisé de votre organisation logistique en 3 étapes simples
+                        </p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">📝</div>
+                            <h3>1. Questionnaire intelligent</h3>
+                            <p>
+                                Répondez à quelques questions sur votre activité, vos volumes, vos transporteurs et votre organisation actuelle. Simple, rapide, sans engagement.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3>2. Analyse instantanée</h3>
+                            <p>
+                                Obtenez immédiatement votre score d'optimisation (0-100), l'estimation précise de vos pertes mensuelles et vos points faibles majeurs.
+                            </p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <h3>3. Recommandations concrètes</h3>
+                            <p>
+                                Recevez un plan d'action personnalisé avec des solutions priorisées : gains rapides, impact moyen et optimisations structurelles.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="trust-section">
+                <div class="container">
+                    <div class="trust-card">
+                        <div class="trust-header">
+                            <div class="trust-avatar">R</div>
+                            <div class="trust-info">
+                                <h3>Romain</h3>
+                                <p>Expert Logistique & Transport • BUT MLT</p>
+                            </div>
+                        </div>
+                        <div class="trust-content">
+                            <p>
+                                Je suis <strong>Romain</strong>, diplômé en Management Logistique & Transport (BUT MLT) et responsable logistique chez <strong>Pellenc ST</strong>, entreprise française leader en machines de tri optique.
+                            </p>
+                            <p style="margin-top: 16px;">
+                                Au quotidien, je gère les <strong>expéditions express vers 50 pays</strong> avec des transporteurs internationaux majeurs (FedEx, GEODIS, DHL). J'ai réalisé des audits carbone complets, optimisé des flux de transport et réduit des coûts logistiques de plusieurs dizaines de milliers d'euros.
+                            </p>
+                            <p style="margin-top: 16px;">
+                                <strong>Je parle votre langage</strong> parce que je suis sur le terrain tous les jours. Mon approche : du concret, du chiffré, de l'actionnable.
+                            </p>
+                        </div>
+                        <div class="trust-badges">
+                            <span class="badge">🎓 BUT MLT (Bac+3)</span>
+                            <span class="badge">🌍 50 pays gérés</span>
+                            <span class="badge">📦 Pellenc ST</span>
+                            <span class="badge">♻️ Audit carbone</span>
+                            <span class="badge">🚛 FedEx • GEODIS • DHL</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE 2: QUESTIONNAIRE -->
+        <div id="page-questionnaire" class="page">
+            <section class="questionnaire-section">
+                <div class="progress-wrapper">
+                    <div class="progress-header">
+                        <span class="progress-text" id="progress-text">Étape 1 sur 5</span>
+                        <span class="progress-text" id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress"></div>
+                    </div>
+                </div>
+
+                <form id="audit-form">
+                    <!-- Section 1 -->
+                    <div class="question-card" data-section="1">
+                        <h2>📋 Votre entreprise</h2>
+                        <p>Pour commencer, parlez-nous de votre activité</p>
+
+                        <div class="form-group">
+                            <label for="company-name">Nom de votre entreprise</label>
+                            <input type="text" id="company-name" required placeholder="Ex: Logistique Pro SARL">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-name">Votre nom et prénom</label>
+                            <input type="text" id="contact-name" required placeholder="Ex: Jean Dupont">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-email">Email professionnel</label>
+                            <input type="email" id="contact-email" required placeholder="jean.dupont@entreprise.fr">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company-size">Taille de votre entreprise</label>
+                            <select id="company-size" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="micro">Moins de 10 salariés</option>
+                                <option value="small">10-50 salariés</option>
+                                <option value="medium">50-100 salariés</option>
+                                <option value="large">Plus de 100 salariés</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="industry">Secteur d'activité</label>
+                            <select id="industry" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="ecommerce">E-commerce / Vente en ligne</option>
+                                <option value="manufacturing">Industrie / Fabrication</option>
+                                <option value="distribution">Distribution / Négoce</option>
+                                <option value="btp">BTP / Matériaux de construction</option>
+                                <option value="food">Agroalimentaire</option>
+                                <option value="retail">Commerce de détail</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-primary" onclick="nextSection(2)">Suivant →</button>
+                        </div>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <div class="question-card hidden" data-section="2">
+                        <h2>📦 Vos volumes</h2>
+                        <p>Aidez-nous à comprendre votre activité logistique</p>
+
+                        <div class="form-group">
+                            <label>Type d'expéditions (plusieurs choix possibles)</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="shipment-type" value="colis">
+                                    <span>Colis (moins de 30 kg)</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="shipment-type" value="palettes">
+                                    <span>Palettes</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="shipment-type" value="camion-complet">
+                                    <span>Camion complet</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="shipment-type" value="messagerie">
+                                    <span>Messagerie / Groupage</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="monthly-shipments">
+                                Nombre d'expéditions par mois
+                                <span class="tooltip">ℹ️
+                                    <span class="tooltip-text">Une estimation approximative suffit. Cela nous aide à dimensionner vos besoins et calculer votre potentiel d'économies.</span>
+                                </span>
+                            </label>
+                            <input type="number" id="monthly-shipments" required placeholder="Ex: 150">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shipment-frequency">Fréquence d'expédition</label>
+                            <select id="shipment-frequency" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="daily">Quotidienne (tous les jours)</option>
+                                <option value="weekly">Hebdomadaire (1-3 fois/semaine)</option>
+                                <option value="biweekly">Bi-mensuelle (2 fois/mois)</option>
+                                <option value="monthly">Mensuelle</option>
+                                <option value="irregular">Irrégulière / À la demande</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="average-weight">Poids moyen par expédition (en kg)</label>
+                            <input type="number" id="average-weight" placeholder="Ex: 25" required>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevSection(1)">← Précédent</button>
+                            <button type="button" class="btn btn-primary" onclick="nextSection(3)">Suivant →</button>
+                        </div>
+                    </div>
+
+                    <!-- Section 3 -->
+                    <div class="question-card hidden" data-section="3">
+                        <h2>🌍 Vos zones de livraison</h2>
+                        <p>Où livrez-vous vos clients ?</p>
+
+                        <div class="form-group">
+                            <label>Zones géographiques couvertes (plusieurs choix possibles)</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="delivery-zone" value="local">
+                                    <span>Local / Régional (même région)</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="delivery-zone" value="france">
+                                    <span>France entière</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="delivery-zone" value="europe">
+                                    <span>Europe</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="delivery-zone" value="international">
+                                    <span>International (hors Europe)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="delivery-concentration">Concentration géographique de vos livraisons</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="delivery-concentration" value="concentrated" required>
+                                    <span>Concentrées (2-3 zones principales)</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="delivery-concentration" value="balanced">
+                                    <span>Moyennement dispersées</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="delivery-concentration" value="dispersed">
+                                    <span>Très dispersées sur tout le territoire</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevSection(2)">← Précédent</button>
+                            <button type="button" class="btn btn-primary" onclick="nextSection(4)">Suivant →</button>
+                        </div>
+                    </div>
+
+                    <!-- Section 4 -->
+                    <div class="question-card hidden" data-section="4">
+                        <h2>💼 Vos prestataires</h2>
+                        <p>Comment organisez-vous vos transports aujourd'hui ?</p>
+
+                        <div class="form-group">
+                            <label for="carrier-count">Combien de transporteurs utilisez-vous ?</label>
+                            <select id="carrier-count" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="none">Aucun (flotte propre)</option>
+                                <option value="one">Un seul transporteur</option>
+                                <option value="two-three">2-3 transporteurs</option>
+                                <option value="many">Plus de 3 transporteurs</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="main-carriers">Noms de vos principaux transporteurs</label>
+                            <input type="text" id="main-carriers" placeholder="Ex: Chronopost, DPD, transporteur local...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="monthly-transport-cost">
+                                Budget transport mensuel (€)
+                                <span class="tooltip">ℹ️
+                                    <span class="tooltip-text">Une estimation suffit. Nous cherchons à évaluer votre potentiel d'économies en euros concrets.</span>
+                                </span>
+                            </label>
+                            <input type="number" id="monthly-transport-cost" placeholder="Ex: 5000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="last-negotiation">Dernière négociation de vos tarifs transport</label>
+                            <select id="last-negotiation" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="recent">Moins de 6 mois</option>
+                                <option value="year">6 mois à 1 an</option>
+                                <option value="two-years">1 à 2 ans</option>
+                                <option value="never">Jamais / Plus de 2 ans</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="carrier-comparison">Comparez-vous régulièrement vos transporteurs ?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="carrier-comparison" value="yes" required>
+                                    <span>Oui, régulièrement (au moins 1 fois/an)</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="carrier-comparison" value="sometimes">
+                                    <span>Parfois, de manière informelle</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="carrier-comparison" value="no">
+                                    <span>Non, jamais</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevSection(3)">← Précédent</button>
+                            <button type="button" class="btn btn-primary" onclick="nextSection(5)">Suivant →</button>
+                        </div>
+                    </div>
+
+                    <!-- Section 5 -->
+                    <div class="question-card hidden" data-section="5">
+                        <h2>⚙️ Votre organisation</h2>
+                        <p>Dernières questions sur votre fonctionnement</p>
+
+                        <div class="form-group">
+                            <label for="logistics-manager">Avez-vous un responsable logistique/transport dédié ?</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="logistics-manager" value="yes-dedicated" required>
+                                    <span>Oui, une personne dédiée à temps plein</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="logistics-manager" value="yes-partial">
+                                    <span>Oui, mais à temps partiel / multi-casquette</span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="logistics-manager" value="no">
+                                    <span>Non, géré par le dirigeant ou un collaborateur polyvalent</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="delivery-urgency">Pourcentage de livraisons urgentes (J+1 ou express)</label>
+                            <select id="delivery-urgency" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="most">Plus de 70%</option>
+                                <option value="half">40-70%</option>
+                                <option value="some">10-40%</option>
+                                <option value="rare">Moins de 10%</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Principales contraintes (plusieurs choix possibles)</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="constraints" value="delais">
+                                    <span>Délais très serrés imposés par les clients</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="constraints" value="fragile">
+                                    <span>Produits fragiles ou sensibles</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="constraints" value="temperature">
+                                    <span>Température contrôlée</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="constraints" value="seasonality">
+                                    <span>Forte saisonnalité des volumes</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="constraints" value="returns">
+                                    <span>Gestion importante des retours</span>
+                                </label>
+                                <label class="checkbox-option">
+                                    <input type="checkbox" name="constraints" value="none">
+                                    <span>Pas de contrainte particulière</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="optimization-goals">Votre objectif prioritaire</label>
+                            <select id="optimization-goals" required>
+                                <option value="">Sélectionnez...</option>
+                                <option value="cost">Réduire les coûts</option>
+                                <option value="speed">Améliorer les délais</option>
+                                <option value="quality">Améliorer la qualité de service</option>
+                                <option value="sustainability">Réduire l'impact environnemental</option>
+                                <option value="all">Tout optimiser globalement</option>
+                            </select>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="btn btn-secondary" onclick="prevSection(4)">← Précédent</button>
+                            <button type="button" class="btn btn-primary" onclick="calculateResults()">Voir mes résultats →</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <!-- PAGE 3: RÉSULTATS -->
+        <div id="page-results" class="page">
+            <section class="results-hero">
+                <div class="score-container">
+                    <div class="score-circle-wrapper">
+                        <svg class="score-circle" width="220" height="220">
+                            <circle cx="110" cy="110" r="100" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="14"/>
+                            <circle id="score-arc" cx="110" cy="110" r="100" fill="none" stroke="white" stroke-width="14" 
+                                    stroke-dasharray="628" stroke-dashoffset="628" transform="rotate(-90 110 110)"
+                                    stroke-linecap="round"
+                                    style="transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);"/>
+                        </svg>
+                        <div class="score-number" id="score-value">--</div>
+                    </div>
+                    <div class="score-label">Score d'optimisation logistique</div>
+                    <p class="score-description" id="score-description"></p>
+                </div>
+            </section>
+
+            <div class="savings-banner">
+                <h3>💰 Économies potentielles estimées</h3>
+                <div class="savings-amount" id="savings-amount">-- €</div>
+                <p>par mois en optimisant votre organisation logistique</p>
+            </div>
+
+            <section class="results-content">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Points d'attention identifiés</h2>
+                        <p class="section-subtitle">Voici les principaux leviers d'optimisation détectés dans votre organisation</p>
+                    </div>
+
+                    <div class="insights-grid" id="insights-container"></div>
+
+                    <div class="section-header" style="margin-top: 80px;">
+                        <h2 class="section-title">Recommandations prioritaires</h2>
+                        <p class="section-subtitle">Actions concrètes à mettre en place, priorisées selon leur impact</p>
+                    </div>
+
+                    <ul class="recommendations-list" id="recommendations-container"></ul>
+
+                    <div class="cta-section" style="margin-top: 80px;">
+                        <div class="section-header">
+                            <h2 class="section-title">Passez à l'action maintenant</h2>
+                            <p class="section-subtitle">
+                                Ces résultats vous donnent une première vision. Prêt à aller plus loin ?
+                            </p>
+                        </div>
+
+                        <div class="pricing-grid">
+                            <div class="pricing-card">
+                                <h3>Audit Complet</h3>
+                                <div class="price">500-800€</div>
+                                <ul class="pricing-features">
+                                    <li>Diagnostic approfondi (20-30 pages)</li>
+                                    <li>Analyse détaillée de tous vos flux</li>
+                                    <li>Plan d'action sur 6 mois</li>
+                                    <li>Estimation précise des économies</li>
+                                    <li>1h de restitution en visio</li>
+                                    <li>Support email pendant 1 mois</li>
+                                </ul>
+                                <button class="btn btn-primary" onclick="goToContact('audit')">Demander un audit</button>
+                            </div>
+
+                            <div class="pricing-card featured">
+                                <h3>Abonnement PME</h3>
+                                <div class="price">79€<span class="price-unit">/mois</span></div>
+                                <ul class="pricing-features">
+                                    <li>Accès complet à l'outil</li>
+                                    <li>Analyses comparatives sectorielles</li>
+                                    <li>Tableaux de bord personnalisés</li>
+                                    <li>Alertes d'optimisation automatiques</li>
+                                    <li>Support prioritaire (24h)</li>
+                                    <li>1 audit léger/trimestre inclus</li>
+                                </ul>
+                                <button class="btn btn-primary" onclick="goToContact('subscription')">S'abonner</button>
+                            </div>
+
+                            <div class="pricing-card">
+                                <h3>Accompagnement</h3>
+                                <div class="price">800-1500€<span class="price-unit">/mois</span></div>
+                                <ul class="pricing-features">
+                                    <li>Tout de l'abonnement PME</li>
+                                    <li>2 visios stratégiques/mois (1h)</li>
+                                    <li>Mise en place concrète des solutions</li>
+                                    <li>Support illimité par email/téléphone</li>
+                                    <li>Aide à la négociation transporteurs</li>
+                                    <li>Optimisation continue personnalisée</li>
+                                </ul>
+                                <button class="btn btn-primary" onclick="goToContact('coaching')">Me faire accompagner</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE 4: CONTACT -->
+        <div id="page-contact" class="page">
+            <section class="contact-section">
+                <div class="contact-form">
+                    <div id="form-container">
+                        <h2>Parlons de votre projet</h2>
+                        <p>Remplissez ce formulaire et je vous recontacte sous 24h pour discuter de vos besoins.</p>
+
+                        <form id="contact-form-element">
+                            <input type="hidden" id="selected-offer" value="">
+                            
+                            <div class="form-group">
+                                <label for="contact-company">Entreprise</label>
+                                <input type="text" id="contact-company" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact-person">Nom et prénom</label>
+                                <input type="text" id="contact-person" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact-email-final">Email</label>
+                                <input type="email" id="contact-email-final" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact-phone">Téléphone</label>
+                                <input type="text" id="contact-phone" placeholder="Optionnel">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact-message">Votre message (optionnel)</label>
+                                <textarea id="contact-message" rows="4" placeholder="Décrivez brièvement vos besoins ou questions..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer ma demande</button>
+                        </form>
+                    </div>
+
+                    <div id="form-success" class="form-success hidden">
+                        <div class="success-icon">✓</div>
+                        <h3>Message envoyé avec succès !</h3>
+                        <p>Je vous recontacte sous 24h pour échanger sur votre projet d'optimisation logistique.</p>
+                        <button class="btn btn-primary" onclick="goToPage('landing')">Retour à l'accueil</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 LogistiQ by Romain • Expert Logistique & Transport • Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <!-- Formspree integration -->
+    <script>
+        // ==========================================
+        // 🔑 CONFIGURATION FORMSPREE
+        // ==========================================
+        // URL Formspree pour recevoir les emails sur r.bertaut@orange.fr
+        const FORMSPREE_URL = 'https://formspree.io/f/mdagqqwj';
+        // ==========================================
+    </script>
+    
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script>
+        function goToPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Questionnaire
+        let currentSection = 1;
+        const totalSections = 5;
+
+        function updateProgress() {
+            const progress = (currentSection / totalSections) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = `Étape ${currentSection} sur ${totalSections}`;
+            document.getElementById('progress-percent').textContent = Math.round(progress) + '%';
+        }
+
+        function nextSection(section) {
+            const currentCard = document.querySelector(`[data-section="${currentSection}"]`);
+            const inputs = currentCard.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value && input.type !== 'radio' && input.type !== 'checkbox') {
+                    isValid = false;
+                    input.style.borderColor = 'var(--danger)';
+                } else if (input.type === 'radio') {
+                    const radioGroup = currentCard.querySelectorAll(`input[name="${input.name}"]`);
+                    const checked = Array.from(radioGroup).some(r => r.checked);
+                    if (!checked) isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+
+            document.querySelector(`[data-section="${currentSection}"]`).classList.add('hidden');
+            document.querySelector(`[data-section="${section}"]`).classList.remove('hidden');
+            currentSection = section;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevSection(section) {
+            document.querySelector(`[data-section="${currentSection}"]`).classList.add('hidden');
+            document.querySelector(`[data-section="${section}"]`).classList.remove('hidden');
+            currentSection = section;
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Reset border on input
+        document.querySelectorAll('input, select').forEach(input => {
+            input.addEventListener('input', function() {
+                this.style.borderColor = 'var(--gray-300)';
+            });
+        });
+
+        // Calculate results
+        function calculateResults() {
+            const data = {
+                companyName: document.getElementById('company-name').value,
+                companySize: document.getElementById('company-size').value,
+                industry: document.getElementById('industry').value,
+                monthlyShipments: parseInt(document.getElementById('monthly-shipments').value),
+                shipmentFrequency: document.getElementById('shipment-frequency').value,
+                carrierCount: document.getElementById('carrier-count').value,
+                monthlyCost: parseInt(document.getElementById('monthly-transport-cost').value),
+                lastNegotiation: document.getElementById('last-negotiation').value,
+                carrierComparison: document.querySelector('input[name="carrier-comparison"]:checked').value,
+                logisticsManager: document.querySelector('input[name="logistics-manager"]:checked').value,
+                deliveryUrgency: document.getElementById('delivery-urgency').value,
+                optimizationGoals: document.getElementById('optimization-goals').value,
+                deliveryConcentration: document.querySelector('input[name="delivery-concentration"]:checked').value
+            };
+
+            // Score calculation
+            let score = 50;
+
+            if (data.carrierCount === 'many') score += 10;
+            if (data.carrierComparison === 'yes') score += 15;
+            if (data.lastNegotiation === 'recent') score += 10;
+            if (data.logisticsManager === 'yes-dedicated') score += 10;
+            if (data.deliveryConcentration === 'concentrated') score += 5;
+
+            if (data.carrierCount === 'one') score -= 15;
+            if (data.carrierComparison === 'no') score -= 20;
+            if (data.lastNegotiation === 'never') score -= 15;
+            if (data.logisticsManager === 'no') score -= 10;
+            if (data.deliveryUrgency === 'most') score -= 10;
+
+            score = Math.max(0, Math.min(100, score));
+
+            // Savings calculation
+            let savingsPercentage = 0;
+            if (score < 40) savingsPercentage = 25;
+            else if (score < 60) savingsPercentage = 18;
+            else if (score < 80) savingsPercentage = 12;
+            else savingsPercentage = 5;
+
+            const monthlySavings = Math.round((data.monthlyCost * savingsPercentage) / 100);
+
+            displayResults(score, monthlySavings, data);
+        }
+
+        function displayResults(score, savings, data) {
+            // Stocker les données pour génération PDF
+            currentDiagnosticData = { score, savings, data };
+            
+            goToPage('results');
+
+            setTimeout(() => {
+                document.getElementById('score-value').textContent = score;
+                const circumference = 2 * Math.PI * 100;
+                const offset = circumference - (score / 100) * circumference;
+                document.getElementById('score-arc').style.strokeDashoffset = offset;
+            }, 100);
+
+            let scoreDescription = '';
+            if (score < 40) {
+                scoreDescription = "Votre organisation logistique présente d'importantes opportunités d'amélioration";
+            } else if (score < 60) {
+                scoreDescription = "Votre logistique est correcte mais peut être nettement optimisée";
+            } else if (score < 80) {
+                scoreDescription = "Votre organisation est bonne, quelques ajustements permettraient de gagner en efficacité";
+            } else {
+                scoreDescription = "Excellente organisation ! Quelques optimisations restent possibles";
+            }
+
+            document.getElementById('score-description').textContent = scoreDescription;
+            document.getElementById('savings-amount').textContent = savings.toLocaleString() + ' €';
+
+            // Insights
+            const insights = generateInsights(data, score);
+            const insightsContainer = document.getElementById('insights-container');
+            insightsContainer.innerHTML = '';
+            insights.forEach(insight => {
+                insightsContainer.innerHTML += `
+                    <div class="insight-card ${insight.severity}">
+                        <h3>${insight.icon} ${insight.title}</h3>
+                        <p>${insight.description}</p>
+                    </div>
+                `;
+            });
+
+            // Recommendations
+            const recommendations = generateRecommendations(data, score, savings);
+            const recoContainer = document.getElementById('recommendations-container');
+            recoContainer.innerHTML = '';
+            recommendations.forEach(reco => {
+                recoContainer.innerHTML += `
+                    <li class="recommendation-item">
+                        <h4>${reco.title}</h4>
+                        <p>${reco.description}</p>
+                        <div class="recommendation-tags">
+                            <span class="tag tag-${reco.priority}">${reco.priorityLabel}</span>
+                            <span class="tag tag-gain">Gain estimé: ${reco.gain}</span>
+                        </div>
+                    </li>
+                `;
+            });
+        }
+
+        function generateInsights(data, score) {
+            const insights = [];
+
+            if (data.carrierCount === 'one') {
+                insights.push({
+                    icon: '⚠️',
+                    title: 'Dépendance à un seul transporteur',
+                    description: 'Vous utilisez un seul transporteur, ce qui limite votre pouvoir de négociation et vous expose à des risques opérationnels. La diversification permettrait de comparer les tarifs et d\'avoir des alternatives en cas de problème.',
+                    severity: 'danger'
+                });
+            }
+
+            if (data.carrierComparison === 'no') {
+                insights.push({
+                    icon: '💸',
+                    title: 'Absence de comparaison tarifaire',
+                    description: 'Vous ne comparez jamais vos transporteurs. C\'est probablement votre plus grosse source de perte financière. Une simple mise en concurrence pourrait vous faire économiser 15-20% immédiatement.',
+                    severity: 'danger'
+                });
+            }
+
+            if (data.lastNegotiation === 'never' || data.lastNegotiation === 'two-years') {
+                insights.push({
+                    icon: '📉',
+                    title: 'Tarifs non renégociés',
+                    description: 'Vos tarifs n\'ont pas été renégociés récemment. Les transporteurs augmentent régulièrement leurs prix. Une renégociation annuelle est indispensable pour rester compétitif.',
+                    severity: 'warning'
+                });
+            }
+
+            if (data.logisticsManager === 'no') {
+                insights.push({
+                    icon: '👤',
+                    title: 'Pas de responsable logistique dédié',
+                    description: 'La logistique est gérée "en plus" d\'autres tâches. Cela limite le temps disponible pour optimiser, négocier et suivre les performances. Un pilotage même partiel améliorerait significativement vos résultats.',
+                    severity: 'warning'
+                });
+            }
+
+            if (data.deliveryUrgency === 'most') {
+                insights.push({
+                    icon: '⚡',
+                    title: 'Trop de livraisons en express',
+                    description: 'Plus de 70% de vos livraisons sont urgentes. Souvent, cette urgence n\'est pas justifiée. Réduire le nombre d\'express de 30% pourrait vous faire économiser plusieurs milliers d\'euros par an.',
+                    severity: 'warning'
+                });
+            }
+
+            if (data.deliveryConcentration === 'dispersed') {
+                insights.push({
+                    icon: '🗺️',
+                    title: 'Livraisons très dispersées',
+                    description: 'Vos livraisons sont très dispersées géographiquement. Le groupage par zone ou la mise en place de tournées optimisées pourrait réduire significativement vos coûts.',
+                    severity: 'warning'
+                });
+            }
+
+            if (score >= 70) {
+                insights.push({
+                    icon: '✅',
+                    title: 'Bonne organisation globale',
+                    description: 'Votre organisation logistique est déjà bien structurée. Les optimisations possibles concernent surtout des ajustements fins et une amélioration continue.',
+                    severity: 'success'
+                });
+            }
+
+            return insights.slice(0, 5);
+        }
+
+        function generateRecommendations(data, score, savings) {
+            const recommendations = [];
+
+            if (data.carrierComparison === 'no') {
+                recommendations.push({
+                    title: 'Mettez en place une comparaison systématique',
+                    description: 'Contactez 2-3 transporteurs concurrents avec votre volume mensuel et comparez les offres. Cela prend 2h de travail et peut vous faire économiser 15-20% immédiatement.',
+                    priority: 'quick-win',
+                    priorityLabel: 'Gain rapide',
+                    gain: Math.round(data.monthlyCost * 0.17) + ' €/mois'
+                });
+            }
+
+            if (data.lastNegotiation !== 'recent') {
+                recommendations.push({
+                    title: 'Renégociez vos tarifs actuels',
+                    description: 'Avec votre volume mensuel (' + data.monthlyShipments + ' expéditions), vous avez un pouvoir de négociation. Demandez une révision tarifaire en mettant en avant votre volume et votre régularité.',
+                    priority: 'quick-win',
+                    priorityLabel: 'Gain rapide',
+                    gain: Math.round(data.monthlyCost * 0.10) + ' €/mois'
+                });
+            }
+
+            if (data.deliveryUrgency === 'most') {
+                recommendations.push({
+                    title: 'Réduisez vos livraisons express',
+                    description: 'Analysez si toutes vos livraisons urgentes le sont vraiment. Proposez à vos clients des délais J+2 avec une remise de 5%. Objectif : passer 30% de vos express en standard.',
+                    priority: 'medium',
+                    priorityLabel: 'Impact moyen',
+                    gain: Math.round(data.monthlyCost * 0.12) + ' €/mois'
+                });
+            }
+
+            if (data.carrierCount === 'one') {
+                recommendations.push({
+                    title: 'Diversifiez vos transporteurs',
+                    description: 'Identifiez 1-2 transporteurs alternatifs pour créer de la concurrence. Utilisez-les progressivement sur 20-30% de vos volumes pour comparer les performances.',
+                    priority: 'medium',
+                    priorityLabel: 'Impact moyen',
+                    gain: 'Sécurisation + 10-15% d\'économies'
+                });
+            }
+
+            if (data.deliveryConcentration !== 'concentrated') {
+                recommendations.push({
+                    title: 'Optimisez vos flux par zone géographique',
+                    description: 'Analysez vos destinations principales et mettez en place du groupage hebdomadaire pour les zones à faible densité. Cela réduit les coûts unitaires de 20-30%.',
+                    priority: 'medium',
+                    priorityLabel: 'Impact moyen',
+                    gain: Math.round(data.monthlyCost * 0.08) + ' €/mois'
+                });
+            }
+
+            if (data.logisticsManager === 'no') {
+                recommendations.push({
+                    title: 'Structurez le pilotage logistique',
+                    description: 'Même sans embaucher, allouez 3-4h/semaine au pilotage logistique : suivi des KPI, analyse des coûts, optimisation continue. Un simple tableau de bord Excel suffit au début.',
+                    priority: 'long-term',
+                    priorityLabel: 'Structuration',
+                    gain: 'Base pour optimisation continue'
+                });
+            }
+
+            recommendations.push({
+                title: 'Mettez en place des indicateurs de performance',
+                description: 'Suivez mensuellement : coût moyen par expédition, taux de livraison à J+1 vs J+2, taux de réclamation, délais moyens par zone. Ces KPI vous permettent de piloter activement.',
+                priority: 'long-term',
+                priorityLabel: 'Structuration',
+                gain: 'Visibilité et pilotage'
+            });
+
+            return recommendations;
+        }
+
+        // ==========================================
+        // 📄 GÉNÉRATION PDF PROPOSITIONS COMMERCIALES
+        // ==========================================
+        
+        // Stockage des données du diagnostic pour génération PDF
+        let currentDiagnosticData = null;
+
+        // ========================================
+        // PDF 1 - AUDIT (avec upsell vers Abo + Accompagnement)
+        // ========================================
+        function generateAuditPDF(score, savings, data) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const navy = [26, 54, 93];
+            const green = [0, 196, 140];
+            const gray = [74, 85, 104];
+            const lightGray = [237, 242, 247];
+            
+            let yPos = 20;
+            const pageWidth = doc.internal.pageSize.width;
+            const margin = 20;
+            const contentWidth = pageWidth - (2 * margin);
+            
+            // PAGE 1 - COUVERTURE
+            doc.setFontSize(36);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('LogistiQ', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 8;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('by Romain', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(20);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('PROPOSITION COMMERCIALE', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 12;
+            doc.setFontSize(16);
+            doc.setTextColor(...green);
+            doc.text('AUDIT LOGISTIQUE COMPLET', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(12);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Diagnostic approfondi • Plan d\'action 6 mois • Restitution visio', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(24);
+            doc.setTextColor(...green);
+            doc.setFont(undefined, 'bold');
+            doc.text('500 - 800 €', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 10;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Livré en 7-10 jours • Garantie satisfait ou remboursé', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 40;
+            doc.text('r.bertaut@orange.fr', pageWidth / 2, yPos, { align: 'center' });
+            
+            // PAGE 2 - DIAGNOSTIC
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('📊 VOTRE DIAGNOSTIC', margin, yPos);
+            
+            yPos += 15;
+            
+            const tableData = [
+                ['Score d\'optimisation', score + '/100'],
+                ['Économies potentielles', savings.toLocaleString() + ' €/mois'],
+                ['Budget transport actuel', data.monthlyCost.toLocaleString() + ' €/mois'],
+                ['Volume mensuel', data.monthlyShipments + ' expéditions']
+            ];
+            
+            tableData.forEach((row, index) => {
+                if (index % 2 === 0) {
+                    doc.setFillColor(...lightGray);
+                    doc.rect(margin, yPos - 5, contentWidth, 10, 'F');
+                }
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(...navy);
+                doc.text(row[0], margin + 5, yPos);
+                doc.setFont(undefined, 'normal');
+                doc.setTextColor(...green);
+                doc.text(row[1], pageWidth - margin - 5, yPos, { align: 'right' });
+                yPos += 10;
+            });
+            
+            yPos += 10;
+            doc.setFontSize(12);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('Points d\'attention majeurs :', margin, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            
+            const issues = [];
+            if (data.carrierComparison === 'no') issues.push('Absence de comparaison transporteurs');
+            if (data.lastNegotiation === 'never' || data.lastNegotiation === 'two-years') issues.push('Tarifs non renégociés');
+            if (data.deliveryUrgency === 'most') issues.push('Taux élevé d\'express');
+            if (data.logisticsManager === 'no') issues.push('Pas de pilotage dédié');
+            
+            issues.forEach(issue => {
+                doc.text('• ' + issue, margin, yPos);
+                yPos += 6;
+            });
+            
+            // PAGE 3 - CONTENU AUDIT
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('📋 CE QUE COMPREND L\'AUDIT', margin, yPos);
+            
+            yPos += 15;
+            
+            const auditSections = [
+                { title: '1. Analyse détaillée (20-30 pages)', items: ['Cartographie flux', 'Analyse coûts', 'Benchmark sectoriel'] },
+                { title: '2. Plan d\'action 6 mois', items: ['Actions rapides (1-2 mois)', 'Actions moyennes (3-4 mois)', 'Actions structurantes (5-6 mois)'] },
+                { title: '3. Estimation économies', items: ['Calcul €/mois et €/an', 'ROI par action', 'Projection 12 mois'] },
+                { title: '4. Restitution visio 45 min', items: ['Présentation résultats', 'Q&R', 'Conseils personnalisés'] },
+                { title: '5. Support email 1 mois', items: ['Aide mise en place', 'Clarifications'] }
+            ];
+            
+            auditSections.forEach(section => {
+                doc.setFontSize(11);
+                doc.setTextColor(...green);
+                doc.setFont(undefined, 'bold');
+                doc.text(section.title, margin, yPos);
+                yPos += 7;
+                
+                doc.setFontSize(9);
+                doc.setTextColor(...gray);
+                doc.setFont(undefined, 'normal');
+                section.items.forEach(item => {
+                    doc.text('✓ ' + item, margin + 3, yPos);
+                    yPos += 5;
+                });
+                yPos += 5;
+            });
+            
+            // PAGE 4 - TARIFICATION
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('💰 TARIFICATION', margin, yPos);
+            
+            yPos += 15;
+            
+            const pricing = [
+                { profile: 'PME Standard', desc: '< 50 salariés', price: '500 €' },
+                { profile: 'PME Structurée', desc: '50-100 salariés', price: '650 €' },
+                { profile: 'PME Complexe', desc: '> 100 salariés, multi-sites', price: '800 €' }
+            ];
+            
+            pricing.forEach((item, index) => {
+                if (index % 2 === 0) {
+                    doc.setFillColor(...lightGray);
+                    doc.rect(margin, yPos - 5, contentWidth, 12, 'F');
+                }
+                doc.setFontSize(10);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(...navy);
+                doc.text(item.profile, margin + 3, yPos);
+                doc.setFontSize(9);
+                doc.setFont(undefined, 'normal');
+                doc.text(item.desc, margin + 3, yPos + 5);
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.setTextColor(...green);
+                doc.text(item.price, pageWidth - margin - 3, yPos + 2, { align: 'right' });
+                yPos += 12;
+            });
+            
+            yPos += 10;
+            doc.setFontSize(11);
+            doc.setTextColor(...green);
+            doc.setFont(undefined, 'bold');
+            doc.text('✅ Garantie satisfait ou remboursé', margin, yPos);
+            
+            yPos += 15;
+            doc.setFontSize(11);
+            doc.setTextColor(...navy);
+            doc.text('📈 Votre ROI', margin, yPos);
+            yPos += 8;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text(`• Économies : ${savings.toLocaleString()} €/mois`, margin, yPos);
+            yPos += 6;
+            doc.text(`• Audit : 500-800 €`, margin, yPos);
+            yPos += 6;
+            doc.text(`• Rentabilisé en : ${Math.ceil(650 / savings)} mois`, margin, yPos);
+            yPos += 6;
+            doc.text(`• Gain année 1 : ${(savings * 12).toLocaleString()} €`, margin, yPos);
+            
+            // PAGE 5 - UPSELL ET APRÈS
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('🚀 ET APRÈS L\'AUDIT ?', margin, yPos);
+            
+            yPos += 12;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            const upsellIntro = 'L\'audit vous donne le plan d\'action. Pour aller plus vite et sécuriser vos résultats :';
+            doc.text(doc.splitTextToSize(upsellIntro, contentWidth), margin, yPos);
+            
+            yPos += 15;
+            
+            // Option Abonnement
+            doc.setFillColor(240, 253, 250);
+            doc.rect(margin, yPos - 5, contentWidth, 35, 'F');
+            
+            doc.setFontSize(12);
+            doc.setTextColor(...green);
+            doc.setFont(undefined, 'bold');
+            doc.text('📊 ABONNEMENT LOGISTIQ PRO - 79€/mois', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('✓ Analyses comparatives continues', margin + 3, yPos);
+            yPos += 5;
+            doc.text('✓ Tableaux de bord personnalisés', margin + 3, yPos);
+            yPos += 5;
+            doc.text('✓ Alertes d\'optimisation automatiques', margin + 3, yPos);
+            yPos += 5;
+            doc.text('✓ 1 audit léger/trimestre inclus', margin + 3, yPos);
+            yPos += 5;
+            doc.text('✓ Support prioritaire 24h', margin + 3, yPos);
+            
+            yPos += 10;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(...green);
+            doc.text('💡 Pack Starter : Audit + 3 mois abo = 950€ au lieu de 1 037€ (-8%)', margin + 3, yPos);
+            
+            yPos += 15;
+            
+            // Option Accompagnement
+            doc.setFillColor(240, 249, 255);
+            doc.rect(margin, yPos - 5, contentWidth, 35, 'F');
+            
+            doc.setFontSize(12);
+            doc.setTextColor(66, 153, 225);
+            doc.setFont(undefined, 'bold');
+            doc.text('🤝 ACCOMPAGNEMENT PERSONNALISÉ - 500-1200€', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('✓ 1 mois (500€) ou 3 mois (1 200€)', margin + 3, yPos);
+            yPos += 5;
+            doc.text('✓ 2 visios stratégiques/mois', margin + 3, yPos);
+            yPos += 5;
+            doc.text('✓ Mise en place concrète avec vous', margin + 3, yPos);
+            yPos += 5;
+            doc.text('✓ Support illimité', margin + 3, yPos);
+            yPos += 5;
+            doc.text('✓ Négociation transporteurs incluse', margin + 3, yPos);
+            
+            yPos += 10;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(66, 153, 225);
+            doc.text('💡 Pack Business : Audit + Accompagnement 1 mois = 1 000€ au lieu de 1 150€ (-13%)', margin + 3, yPos);
+            
+            yPos += 15;
+            
+            // Pack Premium
+            doc.setFillColor(255, 245, 235);
+            doc.rect(margin, yPos - 5, contentWidth, 20, 'F');
+            
+            doc.setFontSize(11);
+            doc.setTextColor(255, 140, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('⭐ PACK PREMIUM (Recommandé)', margin + 3, yPos);
+            
+            yPos += 7;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Audit + Accompagnement 3 mois + 6 mois abo', margin + 3, yPos);
+            yPos += 5;
+            doc.setFontSize(12);
+            doc.setTextColor(255, 140, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('1 799€ au lieu de 2 174€ (-17%)', margin + 3, yPos);
+            
+            yPos += 15;
+            
+            // CTA
+            doc.setFontSize(11);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('📧 Contact : r.bertaut@orange.fr', margin, yPos);
+            
+            return doc;
+        }
+
+        // ========================================
+        // PDF 2 - ABONNEMENT (avec upsell vers Audit + Accompagnement)
+        // ========================================
+        function generateSubscriptionPDF(score, savings, data) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const navy = [26, 54, 93];
+            const green = [0, 196, 140];
+            const gray = [74, 85, 104];
+            const lightGray = [237, 242, 247];
+            
+            let yPos = 20;
+            const pageWidth = doc.internal.pageSize.width;
+            const margin = 20;
+            const contentWidth = pageWidth - (2 * margin);
+            
+            // PAGE 1 - COUVERTURE
+            doc.setFontSize(36);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('LogistiQ', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 8;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('by Romain', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(20);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('PROPOSITION COMMERCIALE', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 12;
+            doc.setFontSize(16);
+            doc.setTextColor(...green);
+            doc.text('ABONNEMENT LOGISTIQ PRO', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(12);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Pilotage continu • Optimisation permanente • Support prioritaire', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(24);
+            doc.setTextColor(...green);
+            doc.setFont(undefined, 'bold');
+            doc.text('79 € / mois', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 10;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Sans engagement • Résiliable à tout moment', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 40;
+            doc.text('r.bertaut@orange.fr', pageWidth / 2, yPos, { align: 'center' });
+            
+            // PAGE 2 - POURQUOI L'ABONNEMENT POUR VOUS
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('📊 POURQUOI L\'ABONNEMENT POUR VOUS ?', margin, yPos);
+            
+            yPos += 12;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            const why = `Avec un score de ${score}/100 et un potentiel d'économies de ${savings.toLocaleString()}€/mois, l'abonnement vous permet de maintenir vos gains dans la durée.`;
+            doc.text(doc.splitTextToSize(why, contentWidth), margin, yPos);
+            
+            yPos += 20;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('Votre situation actuelle :', margin, yPos);
+            yPos += 8;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text(`• Budget transport : ${data.monthlyCost.toLocaleString()}€/mois`, margin, yPos);
+            yPos += 6;
+            doc.text(`• Économies potentielles : ${savings.toLocaleString()}€/mois`, margin, yPos);
+            yPos += 6;
+            doc.text(`• ${data.monthlyShipments} expéditions/mois`, margin, yPos);
+            
+            yPos += 15;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('Ce que l\'abonnement vous apporte :', margin, yPos);
+            yPos += 8;
+            
+            const benefits = [
+                'Suivi mensuel de vos performances logistiques',
+                'Benchmarks sectoriels actualisés en continu',
+                'Détection automatique des nouvelles opportunités',
+                'Tableaux de bord visuels personnalisés',
+                'Alertes quand vous déviez de l\'optimum',
+                'Support prioritaire (réponse sous 24h)',
+                '1 audit léger/trimestre pour ajuster'
+            ];
+            
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            benefits.forEach(benefit => {
+                doc.text('✓ ' + benefit, margin, yPos);
+                yPos += 6;
+            });
+            
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(...green);
+            const roi = `💡 Avec 79€/mois, si vous conservez seulement 10% de vos économies potentielles (${Math.round(savings * 0.1)}€/mois), vous êtes déjà largement rentable !`;
+            doc.text(doc.splitTextToSize(roi, contentWidth), margin, yPos);
+            
+            // PAGE 3 - FONCTIONNALITÉS DÉTAILLÉES
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('⚙️ FONCTIONNALITÉS INCLUSES', margin, yPos);
+            
+            yPos += 15;
+            
+            const features = [
+                {
+                    title: '📊 Tableaux de bord personnalisés',
+                    desc: 'Suivez vos KPI logistiques en temps réel : coût moyen/expédition, délais, taux d\'urgence, répartition géographique.'
+                },
+                {
+                    title: '📈 Analyses comparatives',
+                    desc: 'Comparez vos performances avec des PME similaires de votre secteur. Identifiez vos points forts et axes d\'amélioration.'
+                },
+                {
+                    title: '🔔 Alertes intelligentes',
+                    desc: 'Recevez des notifications quand vos coûts dérivent, qu\'un transporteur devient moins compétitif, ou qu\'une opportunité apparaît.'
+                },
+                {
+                    title: '📋 1 audit léger/trimestre',
+                    desc: 'Tous les 3 mois, bilan de vos évolutions et recommandations d\'ajustement.'
+                },
+                {
+                    title: '💬 Support prioritaire',
+                    desc: 'Vos questions traitées en priorité sous 24h par email.'
+                }
+            ];
+            
+            features.forEach(feature => {
+                doc.setFontSize(11);
+                doc.setTextColor(...green);
+                doc.setFont(undefined, 'bold');
+                doc.text(feature.title, margin, yPos);
+                yPos += 7;
+                
+                doc.setFontSize(9);
+                doc.setTextColor(...gray);
+                doc.setFont(undefined, 'normal');
+                const splitDesc = doc.splitTextToSize(feature.desc, contentWidth);
+                doc.text(splitDesc, margin, yPos);
+                yPos += splitDesc.length * 4 + 5;
+            });
+            
+            // PAGE 4 - ALLER PLUS LOIN (UPSELL)
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('🚀 ALLER PLUS LOIN', margin, yPos);
+            
+            yPos += 12;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            const intro = 'L\'abonnement vous aide à piloter au quotidien. Mais pour maximiser vos résultats dès le départ :';
+            doc.text(doc.splitTextToSize(intro, contentWidth), margin, yPos);
+            
+            yPos += 15;
+            
+            // Audit initial
+            doc.setFillColor(255, 245, 235);
+            doc.rect(margin, yPos - 5, contentWidth, 30, 'F');
+            
+            doc.setFontSize(12);
+            doc.setTextColor(255, 140, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('🎯 COMMENCEZ PAR UN AUDIT (500-800€)', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Pourquoi ? L\'audit identifie TOUS vos leviers d\'économies. Ensuite, l\'abonnement', margin + 3, yPos);
+            yPos += 5;
+            doc.text('vous aide à maintenir les gains. Sans audit initial, vous risquez de passer à côté', margin + 3, yPos);
+            yPos += 5;
+            doc.text('de 60-70% du potentiel.', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(255, 140, 0);
+            doc.text('💡 Pack Starter : Audit + 3 mois abo = 950€ au lieu de 1 037€ (-8%)', margin + 3, yPos);
+            
+            yPos += 20;
+            
+            // Accompagnement
+            doc.setFillColor(240, 249, 255);
+            doc.rect(margin, yPos - 5, contentWidth, 30, 'F');
+            
+            doc.setFontSize(12);
+            doc.setTextColor(66, 153, 225);
+            doc.setFont(undefined, 'bold');
+            doc.text('🤝 AJOUTEZ L\'ACCOMPAGNEMENT (500-1200€)', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Pourquoi ? Avec l\'accompagnement 1-3 mois, je mets en place les optimisations', margin + 3, yPos);
+            yPos += 5;
+            doc.text('avec vous. Vous êtes sûr du résultat. Puis l\'abonnement prend le relais pour', margin + 3, yPos);
+            yPos += 5;
+            doc.text('pérenniser vos gains.', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(66, 153, 225);
+            doc.text('💡 Pack Accompagnement + Abo 6 mois : 1 674€ au lieu de 1 874€ (-11%)', margin + 3, yPos);
+            
+            yPos += 20;
+            
+            // Pack Premium
+            doc.setFillColor(240, 253, 250);
+            doc.rect(margin, yPos - 5, contentWidth, 25, 'F');
+            
+            doc.setFontSize(11);
+            doc.setTextColor(...green);
+            doc.setFont(undefined, 'bold');
+            doc.text('⭐ PACK PREMIUM COMPLET (Meilleur rapport qualité-prix)', margin + 3, yPos);
+            
+            yPos += 7;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Audit complet + Accompagnement 3 mois + Abonnement 6 mois', margin + 3, yPos);
+            yPos += 5;
+            doc.setFontSize(12);
+            doc.setTextColor(...green);
+            doc.setFont(undefined, 'bold');
+            doc.text('1 799€ au lieu de 2 174€ (-17%) = Économie de 375€', margin + 3, yPos);
+            
+            yPos += 15;
+            
+            // CTA
+            doc.setFontSize(11);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('📧 Contact : r.bertaut@orange.fr', margin, yPos);
+            
+            return doc;
+        }
+
+        // ========================================
+        // PDF 3 - ACCOMPAGNEMENT (avec upsell vers Audit + Abo)
+        // ========================================
+        function generateCoachingPDF(score, savings, data) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const navy = [26, 54, 93];
+            const green = [0, 196, 140];
+            const blue = [66, 153, 225];
+            const gray = [74, 85, 104];
+            const lightGray = [237, 242, 247];
+            
+            let yPos = 20;
+            const pageWidth = doc.internal.pageSize.width;
+            const margin = 20;
+            const contentWidth = pageWidth - (2 * margin);
+            
+            // PAGE 1 - COUVERTURE
+            doc.setFontSize(36);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('LogistiQ', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 8;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('by Romain', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(20);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('PROPOSITION COMMERCIALE', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 12;
+            doc.setFontSize(16);
+            doc.setTextColor(...blue);
+            doc.text('ACCOMPAGNEMENT PERSONNALISÉ', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(12);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Mise en œuvre avec vous • Résultats garantis • Support illimité', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 30;
+            doc.setFontSize(24);
+            doc.setTextColor(...blue);
+            doc.setFont(undefined, 'bold');
+            doc.text('500 € - 1 200 €', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 10;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('1 mois (500€) ou 3 mois (1 200€) • Objectifs clairs dès le départ', pageWidth / 2, yPos, { align: 'center' });
+            
+            yPos += 40;
+            doc.text('r.bertaut@orange.fr', pageWidth / 2, yPos, { align: 'center' });
+            
+            // PAGE 2 - POURQUOI SE FAIRE ACCOMPAGNER
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('🤝 POURQUOI SE FAIRE ACCOMPAGNER ?', margin, yPos);
+            
+            yPos += 12;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            const why = `Votre score (${score}/100) montre un potentiel de ${savings.toLocaleString()}€/mois d'économies. L'accompagnement vous garantit d'atteindre ces résultats rapidement et sans faux pas.`;
+            doc.text(doc.splitTextToSize(why, contentWidth), margin, yPos);
+            
+            yPos += 20;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('L\'accompagnement, c\'est :', margin, yPos);
+            yPos += 8;
+            
+            const whatIs = [
+                '✓ Je mets en place les solutions AVEC vous (pas juste des recommandations)',
+                '✓ Vous êtes certain du résultat (pas de risque de mauvaise exécution)',
+                '✓ Gain de temps énorme (vous ne bricolez pas pendant des mois)',
+                '✓ Transfert de compétences (votre équipe monte en niveau)',
+                '✓ Support illimité pendant toute la durée'
+            ];
+            
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            whatIs.forEach(item => {
+                const split = doc.splitTextToSize(item, contentWidth);
+                doc.text(split, margin, yPos);
+                yPos += split.length * 5 + 2;
+            });
+            
+            yPos += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('Pour qui ?', margin, yPos);
+            yPos += 8;
+            
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('• Vous voulez des résultats rapides et sûrs', margin, yPos);
+            yPos += 6;
+            doc.text('• Vous n\'avez pas le temps de tout faire vous-même', margin, yPos);
+            yPos += 6;
+            doc.text('• Vous préférez être guidé plutôt que de tâtonner', margin, yPos);
+            yPos += 6;
+            doc.text('• Vous voulez former votre équipe en même temps', margin, yPos);
+            
+            // PAGE 3 - PLANNING ET LIVRABLES
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('📅 PLANNING DES 3 MOIS', margin, yPos);
+            
+            yPos += 15;
+            
+            const timeline = [
+                {
+                    title: 'MOIS 1 - Actions rapides',
+                    items: [
+                        'Négociation immédiate de vos tarifs transporteurs',
+                        'Mise en place comparaison systématique',
+                        'Réduction express non justifiés (gain immédiat)',
+                        'Premiers KPI et tableaux de bord'
+                    ]
+                },
+                {
+                    title: 'MOIS 2 - Optimisations structurantes',
+                    items: [
+                        'Optimisation flux par zone géographique',
+                        'Mise en place groupage/consolidation',
+                        'Formation de votre équipe',
+                        'Process de pilotage documenté'
+                    ]
+                },
+                {
+                    title: 'MOIS 3 - Autonomisation',
+                    items: [
+                        'Finalisation des outils et process',
+                        'Audit des résultats obtenus',
+                        'Plan d\'optimisation continue',
+                        'Passation complète à votre équipe'
+                    ]
+                }
+            ];
+            
+            timeline.forEach(month => {
+                doc.setFontSize(11);
+                doc.setTextColor(...blue);
+                doc.setFont(undefined, 'bold');
+                doc.text(month.title, margin, yPos);
+                yPos += 7;
+                
+                doc.setFontSize(9);
+                doc.setTextColor(...gray);
+                doc.setFont(undefined, 'normal');
+                month.items.forEach(item => {
+                    doc.text('→ ' + item, margin + 3, yPos);
+                    yPos += 5;
+                });
+                yPos += 5;
+            });
+            
+            yPos += 5;
+            
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(...blue);
+            const gain = `💡 Gain estimé dès le mois 2 : ${Math.round(savings * 0.7).toLocaleString()}€/mois (70% du potentiel)`;
+            doc.text(doc.splitTextToSize(gain, contentWidth), margin, yPos);
+            
+            // PAGE 4 - MAXIMISER VOS RÉSULTATS (UPSELL)
+            doc.addPage();
+            yPos = 20;
+            
+            doc.setFontSize(16);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('🎯 MAXIMISER VOS RÉSULTATS', margin, yPos);
+            
+            yPos += 12;
+            doc.setFontSize(10);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            const intro = 'L\'accompagnement c\'est l\'efficacité maximale. Mais pour des résultats optimaux et pérennes :';
+            doc.text(doc.splitTextToSize(intro, contentWidth), margin, yPos);
+            
+            yPos += 15;
+            
+            // Audit en amont
+            doc.setFillColor(255, 245, 235);
+            doc.rect(margin, yPos - 5, contentWidth, 28, 'F');
+            
+            doc.setFontSize(12);
+            doc.setTextColor(255, 140, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('🎯 COMMENCEZ PAR UN AUDIT (500-800€)', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Pourquoi ? L\'audit pose les fondations. On identifie tous les leviers avant de', margin + 3, yPos);
+            yPos += 5;
+            doc.text('démarrer l\'accompagnement. Résultat : on va 2x plus vite et on ne rate rien.', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(255, 140, 0);
+            doc.text('💡 Pack Business : Audit + Accompagnement 1 mois = 1 000€ (-13%)', margin + 3, yPos);
+            
+            yPos += 18;
+            
+            // Abonnement après
+            doc.setFillColor(240, 253, 250);
+            doc.rect(margin, yPos - 5, contentWidth, 28, 'F');
+            
+            doc.setFontSize(12);
+            doc.setTextColor(...green);
+            doc.setFont(undefined, 'bold');
+            doc.text('📊 GARDEZ L\'ABONNEMENT APRÈS (79€/mois)', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Pourquoi ? Après l\'accompagnement, l\'abonnement maintient vos gains dans la', margin + 3, yPos);
+            yPos += 5;
+            doc.text('durée. Vous restez vigilant et vous continuez d\'optimiser.', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(...green);
+            doc.text('💡 Pack : Accompagnement 3 mois + Abo 6 mois = 1 674€ (-11%)', margin + 3, yPos);
+            
+            yPos += 18;
+            
+            // Pack Premium
+            doc.setFillColor(255, 250, 240);
+            doc.rect(margin, yPos - 5, contentWidth, 30, 'F');
+            
+            doc.setFontSize(11);
+            doc.setTextColor(255, 140, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('⭐ PACK PREMIUM TOUT COMPRIS (Meilleur ROI)', margin + 3, yPos);
+            
+            yPos += 7;
+            doc.setFontSize(9);
+            doc.setTextColor(...gray);
+            doc.setFont(undefined, 'normal');
+            doc.text('Audit complet + Accompagnement 3 mois + Abonnement 6 mois', margin + 3, yPos);
+            yPos += 5;
+            doc.text('= Vous partez sur de bonnes bases + mise en œuvre garantie + pérennité', margin + 3, yPos);
+            
+            yPos += 8;
+            doc.setFontSize(12);
+            doc.setTextColor(255, 140, 0);
+            doc.setFont(undefined, 'bold');
+            doc.text('1 799€ au lieu de 2 174€ (-17%) = Économie de 375€', margin + 3, yPos);
+            
+            yPos += 10;
+            doc.setFontSize(9);
+            doc.setFont(undefined, 'italic');
+            doc.setTextColor(...gray);
+            doc.text(`ROI : Rentabilisé en ${Math.ceil(1799 / savings)} mois`, margin + 3, yPos);
+            
+            yPos += 15;
+            
+            // CTA
+            doc.setFontSize(11);
+            doc.setTextColor(...navy);
+            doc.setFont(undefined, 'bold');
+            doc.text('📧 Contact : r.bertaut@orange.fr', margin, yPos);
+            
+            return doc;
+        }
+
+        // Contact
+        function goToContact(offer) {
+            const offerNames = {
+                'audit': 'Audit Complet',
+                'subscription': 'Abonnement PME',
+                'coaching': 'Accompagnement Personnalisé'
+            };
+            
+            document.getElementById('selected-offer').value = offerNames[offer];
+            
+            // Générer le PDF approprié selon l'offre demandée
+            if (currentDiagnosticData) {
+                setTimeout(() => {
+                    let pdf;
+                    let filename;
+                    const companyName = currentDiagnosticData.data.companyName || 'Entreprise';
+                    const cleanName = companyName.replace(/[^a-z0-9]/gi, '_');
+                    
+                    switch(offer) {
+                        case 'audit':
+                            pdf = generateAuditPDF(
+                                currentDiagnosticData.score,
+                                currentDiagnosticData.savings,
+                                currentDiagnosticData.data
+                            );
+                            filename = `LogistiQ-Proposition-Audit-${cleanName}.pdf`;
+                            break;
+                        case 'subscription':
+                            pdf = generateSubscriptionPDF(
+                                currentDiagnosticData.score,
+                                currentDiagnosticData.savings,
+                                currentDiagnosticData.data
+                            );
+                            filename = `LogistiQ-Proposition-Abonnement-${cleanName}.pdf`;
+                            break;
+                        case 'coaching':
+                            pdf = generateCoachingPDF(
+                                currentDiagnosticData.score,
+                                currentDiagnosticData.savings,
+                                currentDiagnosticData.data
+                            );
+                            filename = `LogistiQ-Proposition-Accompagnement-${cleanName}.pdf`;
+                            break;
+                    }
+                    
+                    if (pdf) {
+                        pdf.save(filename);
+                        
+                        // Message personnalisé selon l'offre
+                        const messages = {
+                            'audit': '📄 Votre proposition d\'audit personnalisée a été téléchargée !\n\nVous y trouverez également nos offres d\'abonnement et d\'accompagnement pour maximiser vos résultats.',
+                            'subscription': '📄 Votre proposition d\'abonnement personnalisée a été téléchargée !\n\nVous y trouverez également nos packs combinés pour des économies encore plus importantes.',
+                            'coaching': '📄 Votre proposition d\'accompagnement personnalisée a été téléchargée !\n\nVous y trouverez également nos formules premium tout compris.'
+                        };
+                        
+                        alert(messages[offer] + '\n\nVous pouvez maintenant remplir le formulaire de contact ci-dessous.');
+                    }
+                }, 500);
+            }
+            
+            goToPage('contact');
+        }
+
+        document.getElementById('contact-form-element').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupération des données du formulaire
+            const formData = {
+                'Offre demandée': document.getElementById('selected-offer').value || 'Non spécifié',
+                'Entreprise': document.getElementById('contact-company').value,
+                'Contact': document.getElementById('contact-person').value,
+                'Email': document.getElementById('contact-email-final').value,
+                'Téléphone': document.getElementById('contact-phone').value || 'Non renseigné',
+                'Message': document.getElementById('contact-message').value || 'Aucun message',
+                'Date': new Date().toLocaleString('fr-FR', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                })
+            };
+
+            // Désactiver le bouton pendant l'envoi
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Envoi en cours...';
+            submitBtn.disabled = true;
+
+            // Envoi via Formspree
+            fetch(FORMSPREE_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Email envoyé avec succès via Formspree!');
+                    
+                    // Afficher le message de succès
+                    document.getElementById('form-container').classList.add('hidden');
+                    document.getElementById('form-success').classList.remove('hidden');
+                } else {
+                    throw new Error('Erreur lors de l\'envoi');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Erreur lors de l\'envoi:', error);
+                
+                // En cas d'erreur, réactiver le bouton et informer l'utilisateur
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                alert('Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou contactez directement r.bertaut@orange.fr');
+            });
+        });
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
