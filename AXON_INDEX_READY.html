@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <title>AXON LOGISTICS - L'intelligence au cœur de vos flux</title>
+    <meta name="description" content="Expert en optimisation axonlogisticsue. Audit professionnel, accompagnement personnalisé. Réduisez vos coûts transport de 10 à 25%. ROI garanti sous 3 mois.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================
+           RESET & VARIABLES
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Industrial-Tech Palette */
+            --bg-primary: #F8FAFC;
+            --structure: #0F172A;
+            --accent: #F59E0B;
+            --border-light: #E2E8F0;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --surface: #FFFFFF;
+            
+            /* Spacing */
+            --radius: 12px;
+            --spacing-xs: 8px;
+            --spacing-sm: 16px;
+            --spacing-md: 24px;
+            --spacing-lg: 40px;
+            --spacing-xl: 64px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ==========================================
+           NAVIGATION
+           ========================================== */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-sm) var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--structure);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--structure);
+        }
+
+        /* ==========================================
+           HERO SECTION
+           ========================================== */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--structure);
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.02em;
+        }
+
+        .hero h1 .highlight {
+            color: var(--accent);
+        }
+
+        .hero .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            font-weight: 500;
+        }
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--structure);
+        }
+
+        .badge-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+
+        /* ==========================================
+           STATS BAR
+           ========================================== */
+        .stats {
+            max-width: 1200px;
+            margin: var(--spacing-xl) auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--structure);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ==========================================
+           SECTION CONTAINER
+           ========================================== */
+        .section {
+            max-width: 1200px;
+            margin: var(--spacing-xl) auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--structure);
+            text-align: center;
+            margin-bottom: var(--spacing-sm);
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            font-weight: 500;
+        }
+
+        /* ==========================================
+           DIAGNOSTIC FORM - CARD RADIOS
+           ========================================== */
+        .diagnostic-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: var(--spacing-lg);
+        }
+
+        .progress-bar {
+            height: 2px;
+            background: var(--border-light);
+            border-radius: 2px;
+            margin-bottom: var(--spacing-lg);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .step-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--structure);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card-radios {
+            display: grid;
+            gap: 12px;
+        }
+
+        .card-radio {
+            position: relative;
+        }
+
+        .card-radio input[type="radio"],
+        .card-radio input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .card-radio label {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: var(--surface);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card-radio input:checked + label {
+            border-color: var(--accent);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .card-radio label:hover {
+            border-color: var(--accent);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--structure);
+            margin-bottom: 4px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: var(--spacing-md);
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--structure);
+            border: 2px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--structure);
+        }
+
+        /* ==========================================
+           SCORE DISPLAY - CIRCULAR GAUGE
+           ========================================== */
+        .score-display {
+            display: none;
+            text-align: center;
+            padding: var(--spacing-lg);
+        }
+
+        .score-display.active {
+            display: block;
+        }
+
+        .score-gauge {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto var(--spacing-md);
+            position: relative;
+        }
+
+        .score-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--accent) 0deg,
+                var(--accent) calc(var(--score-percent) * 3.6deg),
+                var(--border-light) calc(var(--score-percent) * 3.6deg)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-inner {
+            width: 170px;
+            height: 170px;
+            background: var(--surface);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-number {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--structure);
+        }
+
+        .score-max {
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .score-message {
+            max-width: 600px;
+            margin: 0 auto var(--spacing-md);
+            padding: var(--spacing-md);
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius);
+            text-align: left;
+        }
+
+        .score-message strong {
+            color: var(--structure);
+        }
+
+        /* ==========================================
+           FOOTER
+           ========================================== */
+        .footer {
+            background: var(--structure);
+            color: white;
+            padding: var(--spacing-xl) var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .footer h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: var(--spacing-lg) auto 0;
+            padding-top: var(--spacing-md);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero .subtitle {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">📦</div>
+                AXON LOGISTICS
+            </div>
+            <div class="nav-links">
+                <a href="#diagnostic">Diagnostic</a>
+                <a href="#offres">Offres</a>
+                <a href="#faq">FAQ</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Réduisez vos Coûts Logistiques<br>de <span class="highlight">10 à 25%</span></h1>
+        <p class="subtitle">Audit professionnel · Méthodologie éprouvée · ROI garanti sous 3 mois</p>
+        
+        <div class="trust-badges">
+            <div class="badge">
+                <div class="badge-icon">✓</div>
+                Méthodologie éprouvée
+            </div>
+            <div class="badge">
+                <div class="badge-icon">✓</div>
+                Outils professionnels
+            </div>
+            <div class="badge">
+                <div class="badge-icon">✓</div>
+                Garantie résultats
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">10-25%</div>
+                <div class="stat-label">Économies identifiées</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">< 3 mois</div>
+                <div class="stat-label">Retour sur investissement</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">20-25</div>
+                <div class="stat-label">Pages de rapport détaillé</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">90 jours</div>
+                <div class="stat-label">Déploiement garantie</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diagnostic Section -->
+    <section id="diagnostic" class="section">
+        <h2 class="section-title">Diagnostic Logistique Gratuit</h2>
+        <p class="section-subtitle">Évaluez votre potentiel d'économies en 2 minutes</p>
+
+        <div class="diagnostic-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+
+            <form id="diagnosticForm" action="https://formspree.io/f/mlgwdbzz" method="POST">
+                <!-- Step 1: Entreprise -->
+                <div class="form-step active" data-step="1">
+                    <h3 class="step-title">🏢 Votre Entreprise</h3>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="text" name="entreprise" class="input-field" placeholder="Nom de l'entreprise *" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="text" name="secteur" class="input-field" placeholder="Secteur d'activité *" required>
+                    </div>
+
+                    <p style="margin-bottom: 12px; font-weight: 600; color: var(--structure);">Taille de l'entreprise *</p>
+                    <div class="card-radios">
+                        <div class="card-radio">
+                            <input type="radio" name="taille_entreprise" id="size1" value="1-20" required>
+                            <label for="size1">
+                                <div class="card-icon">👤</div>
+                                <div class="card-content">
+                                    <div class="card-title">1 à 20 salariés</div>
+                                    <div class="card-desc">Très petite entreprise</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="taille_entreprise" id="size2" value="20-50">
+                            <label for="size2">
+                                <div class="card-icon">👥</div>
+                                <div class="card-content">
+                                    <div class="card-title">20 à 50 salariés</div>
+                                    <div class="card-desc">Petite entreprise</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="taille_entreprise" id="size3" value="50-200">
+                            <label for="size3">
+                                <div class="card-icon">👨‍👩‍👧‍👦</div>
+                                <div class="card-content">
+                                    <div class="card-title">50 à 200 salariés</div>
+                                    <div class="card-desc">Moyenne entreprise</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="taille_entreprise" id="size4" value="200+">
+                            <label for="size4">
+                                <div class="card-icon">🏢</div>
+                                <div class="card-content">
+                                    <div class="card-title">Plus de 200 salariés</div>
+                                    <div class="card-desc">Grande entreprise</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <p style="margin: 20px 0 12px; font-weight: 600; color: var(--structure);">Nombre de sites/entrepôts *</p>
+                    <div class="card-radios">
+                        <div class="card-radio">
+                            <input type="radio" name="nombre_sites" id="sites1" value="1" required>
+                            <label for="sites1">
+                                <div class="card-icon">📍</div>
+                                <div class="card-content">
+                                    <div class="card-title">1 site unique</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="nombre_sites" id="sites2" value="2-3">
+                            <label for="sites2">
+                                <div class="card-icon">📍📍</div>
+                                <div class="card-content">
+                                    <div class="card-title">2 à 3 sites</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="nombre_sites" id="sites3" value="4-10">
+                            <label for="sites3">
+                                <div class="card-icon">📍📍📍</div>
+                                <div class="card-content">
+                                    <div class="card-title">4 à 10 sites</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="nombre_sites" id="sites4" value="10+">
+                            <label for="sites4">
+                                <div class="card-icon">🗺️</div>
+                                <div class="card-content">
+                                    <div class="card-title">Plus de 10 sites</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Suivant →</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Contact -->
+                <div class="form-step" data-step="2">
+                    <h3 class="step-title">📧 Vos Coordonnées</h3>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="text" name="nom" class="input-field" placeholder="Votre nom *" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="text" name="fonction" class="input-field" placeholder="Votre fonction *" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="email" name="email" class="input-field" placeholder="Email professionnel *" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="tel" name="telephone" class="input-field" placeholder="Téléphone *" required>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">← Retour</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Suivant →</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Activité Logistique -->
+                <div class="form-step" data-step="3">
+                    <h3 class="step-title">📊 Votre Activité Logistique</h3>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="number" name="budget" class="input-field" placeholder="Budget transport mensuel (€) *" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="number" name="expeditions" class="input-field" placeholder="Nombre d'expéditions/mois *" required>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <input type="number" name="poids_moyen" step="0.1" class="input-field" placeholder="Poids moyen par colis (kg)">
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <input type="number" name="taux_express" min="0" max="100" class="input-field" placeholder="Part d'envois en express (%)">
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">← Retour</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Suivant →</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Zones de Livraison -->
+                <div class="form-step" data-step="4">
+                    <h3 class="step-title">🌍 Zones de Livraison</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-secondary);">Cochez vos zones de livraison principales (plusieurs choix possibles)</p>
+
+                    <div class="card-radios">
+                        <div class="card-radio">
+                            <input type="checkbox" name="zones" id="zone1" value="france_idf">
+                            <label for="zone1">
+                                <div class="card-icon">🗼</div>
+                                <div class="card-content">
+                                    <div class="card-title">France - Île-de-France</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="zones" id="zone2" value="france_province">
+                            <label for="zone2">
+                                <div class="card-icon">🇫🇷</div>
+                                <div class="card-content">
+                                    <div class="card-title">France - Province</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="zones" id="zone3" value="europe_ouest">
+                            <label for="zone3">
+                                <div class="card-icon">🌍</div>
+                                <div class="card-content">
+                                    <div class="card-title">Europe de l'Ouest (Allemagne, Benelux, UK)</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="zones" id="zone4" value="europe_sud">
+                            <label for="zone4">
+                                <div class="card-icon">☀️</div>
+                                <div class="card-content">
+                                    <div class="card-title">Europe du Sud (Espagne, Italie, Portugal)</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="zones" id="zone5" value="europe_est">
+                            <label for="zone5">
+                                <div class="card-icon">🌐</div>
+                                <div class="card-content">
+                                    <div class="card-title">Europe de l'Est</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="zones" id="zone6" value="international">
+                            <label for="zone6">
+                                <div class="card-icon">✈️</div>
+                                <div class="card-content">
+                                    <div class="card-title">International (hors Europe)</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">← Retour</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Suivant →</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Transporteurs -->
+                <div class="form-step" data-step="5">
+                    <h3 class="step-title">🚚 Vos Transporteurs Actuels</h3>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <input type="text" name="transporteurs_actuels" class="input-field" placeholder="Transporteurs utilisés (ex: Geodis, FedEx, DHL...) *" required>
+                    </div>
+
+                    <p style="margin-bottom: 12px; font-weight: 600; color: var(--structure);">Dernière renégociation tarifaire *</p>
+                    <div class="card-radios">
+                        <div class="card-radio">
+                            <input type="radio" name="derniere_negociation" id="nego1" value="moins_6_mois" required>
+                            <label for="nego1">
+                                <div class="card-icon">✅</div>
+                                <div class="card-content">
+                                    <div class="card-title">Moins de 6 mois</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="derniere_negociation" id="nego2" value="6_12_mois">
+                            <label for="nego2">
+                                <div class="card-icon">📅</div>
+                                <div class="card-content">
+                                    <div class="card-title">6 à 12 mois</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="derniere_negociation" id="nego3" value="1_2_ans">
+                            <label for="nego3">
+                                <div class="card-icon">⚠️</div>
+                                <div class="card-content">
+                                    <div class="card-title">1 à 2 ans</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="derniere_negociation" id="nego4" value="2_5_ans">
+                            <label for="nego4">
+                                <div class="card-icon">🔴</div>
+                                <div class="card-content">
+                                    <div class="card-title">2 à 5 ans</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="derniere_negociation" id="nego5" value="plus_5_ans">
+                            <label for="nego5">
+                                <div class="card-icon">🚨</div>
+                                <div class="card-content">
+                                    <div class="card-title">Plus de 5 ans</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="derniere_negociation" id="nego6" value="jamais">
+                            <label for="nego6">
+                                <div class="card-icon">❌</div>
+                                <div class="card-content">
+                                    <div class="card-title">Jamais renégocié</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <p style="margin: 20px 0 12px; font-weight: 600; color: var(--structure);">Avez-vous des contrats cadres ? *</p>
+                    <div class="card-radios">
+                        <div class="card-radio">
+                            <input type="radio" name="contrats_cadres" id="contrat1" value="oui_plusieurs" required>
+                            <label for="contrat1">
+                                <div class="card-icon">📄📄</div>
+                                <div class="card-content">
+                                    <div class="card-title">Oui, plusieurs contrats</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="contrats_cadres" id="contrat2" value="oui_un">
+                            <label for="contrat2">
+                                <div class="card-icon">📄</div>
+                                <div class="card-content">
+                                    <div class="card-title">Oui, un contrat</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="contrats_cadres" id="contrat3" value="non">
+                            <label for="contrat3">
+                                <div class="card-icon">❌</div>
+                                <div class="card-content">
+                                    <div class="card-title">Non, aucun contrat</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="contrats_cadres" id="contrat4" value="ne_sait_pas">
+                            <label for="contrat4">
+                                <div class="card-icon">❓</div>
+                                <div class="card-content">
+                                    <div class="card-title">Je ne sais pas</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">← Retour</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Suivant →</button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Problématiques -->
+                <div class="form-step" data-step="6">
+                    <h3 class="step-title">🔍 Vos Problématiques</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-secondary);">Cochez toutes les situations qui s'appliquent</p>
+
+                    <div class="card-radios">
+                        <div class="card-radio">
+                            <input type="checkbox" name="problemes" id="prob1" value="no_comparison">
+                            <label for="prob1">
+                                <div class="card-icon">🔄</div>
+                                <div class="card-content">
+                                    <div class="card-title">Pas de comparaison transporteurs</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="problemes" id="prob2" value="no_negotiation">
+                            <label for="prob2">
+                                <div class="card-icon">📅</div>
+                                <div class="card-content">
+                                    <div class="card-title">Tarifs non renégociés depuis 2+ ans</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="problemes" id="prob3" value="too_much_express">
+                            <label for="prob3">
+                                <div class="card-icon">⚡</div>
+                                <div class="card-content">
+                                    <div class="card-title">Taux express > 30%</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="problemes" id="prob4" value="no_tracking">
+                            <label for="prob4">
+                                <div class="card-icon">📈</div>
+                                <div class="card-content">
+                                    <div class="card-title">Pas de tableau de bord coûts</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="problemes" id="prob5" value="dispersed">
+                            <label for="prob5">
+                                <div class="card-icon">🗺️</div>
+                                <div class="card-content">
+                                    <div class="card-title">Livraisons très dispersées</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="checkbox" name="problemes" id="prob6" value="no_consolidation">
+                            <label for="prob6">
+                                <div class="card-icon">📦</div>
+                                <div class="card-content">
+                                    <div class="card-title">Pas de groupage/consolidation</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">← Retour</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Suivant →</button>
+                    </div>
+                </div>
+
+                <!-- Step 7: Objectifs -->
+                <div class="form-step" data-step="7">
+                    <h3 class="step-title">🎯 Vos Objectifs & Attentes</h3>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <textarea name="objectifs" required rows="4" class="input-field" style="resize: vertical;" placeholder="Quels sont vos principaux objectifs axonlogisticsues ? *"></textarea>
+                    </div>
+
+                    <p style="margin-bottom: 12px; font-weight: 600; color: var(--structure);">Date souhaitée pour l'audit *</p>
+                    <div class="card-radios">
+                        <div class="card-radio">
+                            <input type="radio" name="date_souhaitee" id="date1" value="urgent" required>
+                            <label for="date1">
+                                <div class="card-icon">🚨</div>
+                                <div class="card-content">
+                                    <div class="card-title">Le plus tôt possible (< 1 semaine)</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="date_souhaitee" id="date2" value="1_2_semaines">
+                            <label for="date2">
+                                <div class="card-icon">📅</div>
+                                <div class="card-content">
+                                    <div class="card-title">Dans 1 à 2 semaines</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="date_souhaitee" id="date3" value="1_mois">
+                            <label for="date3">
+                                <div class="card-icon">📆</div>
+                                <div class="card-content">
+                                    <div class="card-title">Dans le mois</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="date_souhaitee" id="date4" value="flexible">
+                            <label for="date4">
+                                <div class="card-icon">🕐</div>
+                                <div class="card-content">
+                                    <div class="card-title">Flexible</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <p style="margin: 20px 0 12px; font-weight: 600; color: var(--structure);">Comment nous avez-vous connu ? *</p>
+                    <div class="card-radios">
+                        <div class="card-radio">
+                            <input type="radio" name="provenance" id="prov1" value="linkedin" required>
+                            <label for="prov1">
+                                <div class="card-icon">💼</div>
+                                <div class="card-content">
+                                    <div class="card-title">LinkedIn</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="provenance" id="prov2" value="google">
+                            <label for="prov2">
+                                <div class="card-icon">🔍</div>
+                                <div class="card-content">
+                                    <div class="card-title">Google</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="provenance" id="prov3" value="recommandation">
+                            <label for="prov3">
+                                <div class="card-icon">👥</div>
+                                <div class="card-content">
+                                    <div class="card-title">Recommandation</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="card-radio">
+                            <input type="radio" name="provenance" id="prov4" value="autre">
+                            <label for="prov4">
+                                <div class="card-icon">💡</div>
+                                <div class="card-content">
+                                    <div class="card-title">Autre</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="score" id="hiddenScore">
+                    <input type="hidden" name="message_evaluation" id="hiddenMessage">
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">← Retour</button>
+                        <button type="submit" class="btn btn-primary">Voir Mon Score →</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Score Display -->
+            <div class="score-display" id="scoreDisplay">
+                <h3 class="step-title">Votre Score Logistique</h3>
+                
+                <div class="score-gauge" style="--score-percent: 0" id="scoreGauge">
+                    <div class="score-circle">
+                        <div class="score-inner">
+                            <div class="score-number" id="scoreNumber">0</div>
+                            <div class="score-max">/100</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-message" id="scoreMessage"></div>
+
+                <p style="color: var(--text-secondary); margin-top: 24px;">
+                    ✅ Diagnostic envoyé avec succès !<br>
+                    Vous recevrez votre analyse détaillée par email sous 24h.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>AXON LOGISTICS</h4>
+                <p style="color: rgba(255,255,255,0.7); line-height: 1.7;">
+                    Expert en optimisation axonlogisticsue.<br>
+                    Réduisez vos coûts transport de 10 à 25%.<br>
+                    ROI garanti sous 3 mois.
+                </p>
+            </div>
+            <div>
+                <h4>Services</h4>
+                <a href="#diagnostic">Diagnostic gratuit</a>
+                <a href="#offres">Audit axonlogisticsue</a>
+                <a href="#offres">Accompagnement</a>
+            </div>
+            <div>
+                <h4>Ressources</h4>
+                <a href="#faq">FAQ</a>
+                <a href="#diagnostic">Simulateur</a>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <a href="/cdn-cgi/l/email-protection#cbb9e5a9aeb9bfaabebf8ba4b9aaa5acaee5adb9"><span class="__cf_email__" data-cfemail="15673b77706761746061557a67747b72703b7367">[email&#160;protected]</span></a>
+                <p style="color: rgba(255,255,255,0.7);">Pertuis, France</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 AXON LOGISTICS - Tous droits réservés · Optimisation Logistique pour Entreprises
+        </div>
+    </footer>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 7;
+
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('active');
+                currentStep++;
+                document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.add('active');
+                updateProgress();
+                window.scrollTo({ top: document.getElementById('diagnostic').offsetTop - 100, behavior: 'smooth' });
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('active');
+                currentStep--;
+                document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.add('active');
+                updateProgress();
+                window.scrollTo({ top: document.getElementById('diagnostic').offsetTop - 100, behavior: 'smooth' });
+            }
+        }
+
+        document.getElementById('diagnosticForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const problems = document.querySelectorAll('input[name="problemes"]:checked').length;
+            const score = 100 - (problems * 15);
+            
+            let message = '';
+            if (score >= 80) {
+                message = '🎉 <strong>Excellent !</strong> Votre axonlogisticsue est bien optimisée. Quelques ajustements peuvent encore améliorer vos performances de 5-10%.';
+            } else if (score >= 60) {
+                message = '⚠️ <strong>Potentiel d\'amélioration significatif !</strong> Vous pourriez économiser <strong>10-15%</strong> de vos coûts transport avec les bonnes optimisations.';
+            } else if (score >= 40) {
+                message = '🔴 <strong>Attention !</strong> Votre axonlogisticsue nécessite une optimisation urgente. Économies potentielles : <strong>15-20%</strong> soit plusieurs milliers d\'euros par mois.';
+            } else {
+                message = '🚨 <strong>Urgent !</strong> Vos coûts axonlogisticsues présentent des opportunités d\'optimisation importantes : <strong>20-25%</strong>. Un audit professionnel est fortement recommandé.';
+            }
+
+            document.getElementById('hiddenScore').value = score;
+            document.getElementById('hiddenMessage').value = message;
+
+            const formData = new FormData(this);
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(() => {
+                document.querySelectorAll('.form-step').forEach(step => step.style.display = 'none');
+                document.getElementById('scoreDisplay').classList.add('active');
+                
+                const scoreGauge = document.getElementById('scoreGauge');
+                const scoreNumber = document.getElementById('scoreNumber');
+                scoreGauge.style.setProperty('--score-percent', score);
+                
+                let current = 0;
+                const interval = setInterval(() => {
+                    if (current >= score) {
+                        clearInterval(interval);
+                    } else {
+                        current++;
+                        scoreNumber.textContent = current;
+                    }
+                }, 20);
+
+                document.getElementById('scoreMessage').innerHTML = message;
+            });
+        });
+    </script>
+</body>
+</html>
